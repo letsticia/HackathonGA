@@ -40,6 +40,8 @@ if funcionalidade == "Pontos":
         planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, distancia = True)
     elif opcao == "Média de dois pontos":
         planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, media = True)
+    elif opcao == "Equação da reta que passa por dois pontos":
+        planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, reta = True)
     
     
     
