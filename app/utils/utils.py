@@ -157,6 +157,104 @@ def pontos():
         planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, media = True)
     elif opcao == "Equação da reta que passa por dois pontos":
         planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, reta = True)
+
+def planoCartesianoReta(reta_a, reta_b, c, ponto_x = None, ponto_y = None, distancia = None):
     
+    ponto = (ponto_x, ponto_y)
     
+    # Criando a figura e o eixo
+    fig, ax = plt.subplots()
     
+     # Movendo as espinhas para o centro
+    ax.spines['left'].set_position('zero')
+    ax.spines['bottom'].set_position('zero')
+    
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+
+    # Movendo os ticks para o centro
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+    
+    ax.axhline(0, color='black',linewidth=0.5)
+    ax.axvline(0, color='black',linewidth=0.5)
+
+    if distancia:
+        division = reta_a**2 + reta_b**2
+        
+        if division == 0:
+            st.error("A equação da reta não é válida.")
+        else:
+            distancia = abs(reta_a * ponto_x + reta_b * ponto_y + c) / (reta_a**2 + reta_b**2)**0.5
+            
+            if distancia.is_integer():
+                distancia = int(distancia)
+                st.info(f"A distância do ponto ({ponto_x}, {ponto_y}) à reta {reta_a}x + {reta_b}y + {c} = 0 é {distancia}.")
+            else:
+                st.info(f"A distância do ponto ({ponto_x}, {ponto_y}) à reta {reta_a}x + {reta_b}y + {c} = 0 é {distancia:.2f}.")
+            
+            # Plotando o ponto
+            ponto = (ponto_x, ponto_y)
+            ax.plot(*ponto, 'ro', markersize = 5)
+            ax.annotate(f'P{ponto_x, ponto_y}', ponto, textcoords="offset points", xytext=(-15,-15), ha='center', color='red')
+            
+            # Calculando o valor absoluto máximo entre as coordenadas x e y do ponto
+            max_value = max(abs(ponto_x), abs(ponto_y))
+            
+            # Definindo os limites dos eixos
+            ax.set_xlim(-max_value-10, max_value+10)
+            ax.set_ylim(-max_value-10, max_value+10)
+            
+            # Desenhando linhas tracejadas do eixo x até o ponto e do eixo y até o ponto
+            ax.hlines(ponto_y, 0, ponto_x, colors='red', linestyles='dashed', linewidth=0.5)
+            ax.vlines(ponto_x, 0, ponto_y, colors='red', linestyles='dashed', linewidth=0.5)
+            
+            x_values = np.linspace(-max_value-10, max_value+10, 400)
+            y_values = (-reta_a * x_values - c) / reta_b
+            ax.plot(x_values, y_values, 'g-', linewidth = 1)
+            
+            # Exibindo a grade
+            ax.grid(True)
+
+            # Exibindo o gráfico no Streamlit
+            st.pyplot(fig)
+                    
+
+    
+        
+        
+            
+        
+    
+   
+def retas():
+    """Função para exibir a interface da funcionalidade de retas.
+    """
+    
+    st.subheader("Retas")
+    st.write("Aqui você pode calcular: a distância de um ponto a uma reta e a equação da reta paralela ou perpendicular a uma reta dada que passa por um ponto.")
+    opcao = st.radio("Selecione uma opção:", ["Distância de um ponto a uma reta", "Equação da reta paralela ou perpendicular a uma reta dada que passa por um ponto"])
+    
+    if opcao == "Distância de um ponto a uma reta":
+        
+        st.info("1. Para calcular a distância de um ponto a uma reta, você precisa da equação da reta e das coordenadas do ponto.")
+        st.info("2. Aqui, consideramos a equação da reta na forma (ax + by + c = 0)")
+        st.info("3. A distância de um ponto (x0, y0) a uma reta ax + by + c = 0 é dada pela fórmula: d = $\\frac{|ax + by + c|}{\\sqrt{a^2 + b^2}}$, onde d é a distância.")
+        
+        ponto_x = st.number_input("Digite a coordenada x do ponto:", value=0)
+        ponto_y = st.number_input("Digite a coordenada y do ponto:", value=0)
+        
+        reta_a = st.number_input("Digite o coeficiente angular da reta (a):", value=0)
+        reta_b = st.number_input("Digite o coeficiente linear da reta (b):", value=0)
+        reta_c = st.number_input("Digite o termo independente da reta (c):", value=0)
+        
+        planoCartesianoReta(reta_a, reta_b, reta_c, ponto_x, ponto_y, distancia = True)
+        
+        
+        
+        
+            
+        # exibindo o gráfico
+        
+        
+        

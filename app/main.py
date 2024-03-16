@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-from utils.utils import planoCartesiano, pontos
+from utils.utils import pontos, retas
 
 st.set_page_config(
     page_title="Calculadora de Geometria Analítica",
@@ -21,3 +21,5 @@ funcionalidade = st.radio("Selecione um dos assuntos:", ["Pontos", "Retas", "Cir
 
 if funcionalidade == "Pontos":
     pontos()
+elif funcionalidade == "Retas":
+    retas()
