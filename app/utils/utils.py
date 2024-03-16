@@ -3,6 +3,17 @@ import streamlit as st
 import numpy as np
 
 def planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, distancia = None, media = None, reta = None):
+    """Função para plotar um plano cartesiano com dois pontos A e B e, opcionalmente, a distância entre eles, a média deles e a equação da reta que passa por eles.
+
+    Args:
+    pontoA_x (int): Coordenada x do ponto A.
+    pontoA_y (int): Coordenada y do ponto A.
+    pontoB_x (int): Coordenada x do ponto B.
+    pontoB_y (int): Coordenada y do ponto B.
+    distancia (bool, optional): Se True, exibe a distância entre os pontos A e B. Defaults to None.
+    media (bool, optional): Se True, exibe a média dos pontos A e B. Defaults to None.
+    reta (bool, optional): Se True, exibe a equação da reta que passa pelos pontos A e B. Defaults to None.
+    """
     
     pontoA = (pontoA_x, pontoA_y)
     pontoB = (pontoB_x, pontoB_y)
@@ -119,3 +130,33 @@ def planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, distancia = None, me
 
     # Exibindo o gráfico no Streamlit
     st.pyplot(fig)
+    
+def pontos():
+    """Função para exibir a interface da funcionalidade de pontos.
+    """
+    
+    st.subheader("Pontos")
+    st.write("Aqui você pode calcular a distância entre dois pontos, a média de dois pontos e a equação da reta que passa por dois pontos.")
+    
+    pontoA_x = st.number_input("Digite a coordenada x do ponto A:", value=0)
+    pontoA_y = st.number_input("Digite a coordenada y do ponto A:", value=0)
+    
+    pontoB_x = st.number_input("Digite a coordenada x do ponto B:", value=0)
+    pontoB_y = st.number_input("Digite a coordenada y do ponto B:", value=0)
+    
+
+    st.write("O que você deseja Fazer?")
+    opcao = st.radio("Selecione uma opção:", ["Exibir Pontos", "Distância entre dois pontos", "Média de dois pontos", "Equação da reta que passa por dois pontos"])
+    
+    
+    if opcao == "Exibir Pontos":
+        planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y)
+    elif opcao == "Distância entre dois pontos":
+        planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, distancia = True)
+    elif opcao == "Média de dois pontos":
+        planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, media = True)
+    elif opcao == "Equação da reta que passa por dois pontos":
+        planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, reta = True)
+    
+    
+    
