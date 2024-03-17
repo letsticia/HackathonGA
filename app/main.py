@@ -15,9 +15,9 @@ st.set_page_config(
 
 st.header("Calculadora de Geometria Analítica")
 
-st.write("Este aplicativo tem como objetivo facilitar o cálculo de pontos, retas, circunferências, volumes e áreas na Geometria Analítica.")
+st.write("Este aplicativo tem como objetivo facilitar o cálculo de pontos, retas e circunferências na Geometria Analítica.")
 
-funcionalidade = st.radio("Selecione um dos assuntos:", ["Pontos", "Retas", "Circunferências", "Volumes e Áreas"])
+funcionalidade = st.radio("Selecione um dos assuntos:", ["Pontos", "Retas", "Circunferências"])
 
 if funcionalidade == "Pontos":
     pontos()
@@ -25,5 +25,3 @@ elif funcionalidade == "Retas":
     retas()
 elif funcionalidade == "Circunferências":
     circunferencias()
-elif funcionalidade == "Volumes e Áreas":
-    pass
