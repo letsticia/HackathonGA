@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-from utils.utils import pontos, retas
+from utils.utils import pontos, retas, circunferencias
 
 st.set_page_config(
     page_title="Calculadora de Geometria Analítica",
@@ -23,3 +23,7 @@ if funcionalidade == "Pontos":
     pontos()
 elif funcionalidade == "Retas":
     retas()
+elif funcionalidade == "Circunferências":
+    circunferencias()
+elif funcionalidade == "Volumes e Áreas":
+    pass

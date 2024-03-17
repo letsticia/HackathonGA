@@ -130,7 +130,8 @@ def planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, distancia = None, me
 
     # Exibindo o gráfico no Streamlit
     st.pyplot(fig)
-    
+
+   
 def pontos():
     """Função para exibir a interface da funcionalidade de pontos.
     """
@@ -158,7 +159,21 @@ def pontos():
     elif opcao == "Equação da reta que passa por dois pontos":
         planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, reta = True)
 
+
 def planoCartesianoReta(reta_a = None, reta_b = None, c = None, ponto_x = None, ponto_y = None, distancia = None, paralela = None, perpendicular = None):
+    """ Função para plotar um plano cartesiano com uma reta e, opcionalmente, um ponto e a distância entre eles. Além disso, verifica se duas retas são paralelas e calcula a equação da reta perpendicular.
+
+    Args:
+        reta_a (int, optional): Coeficiente angular da reta. Defaults to None.
+        reta_b (int, optional): Coeficiente linear da reta. Defaults to None.
+        c (int, optional): Termo independente da reta. Defaults to None.
+        ponto_x (int, optional): Coordenada x do ponto. Defaults to None.
+        ponto_y (int, optional): Coordenada y do ponto. Defaults to None.
+        distancia (bool, optional): Se True, exibe a distância entre o ponto e a reta. Defaults to None.
+        paralela (bool, optional): Se True, verifica se duas retas são paralelas. Defaults to None.
+        perpendicular (bool, optional): Se True, calcula a equação da reta perpendicular. Defaults to None.
+    """
+    
     # Criando a figura e o eixo
     fig, ax = plt.subplots()
     
@@ -267,8 +282,8 @@ def planoCartesianoReta(reta_a = None, reta_b = None, c = None, ponto_x = None, 
 
     # Exibindo o gráfico no Streamlit
     st.pyplot(fig)              
- 
-   
+
+  
 def retas():
     """Função para exibir a interface da funcionalidade de retas.
     """
@@ -322,4 +337,161 @@ def retas():
         # exibindo o gráfico
         
         
+def planoCartesianoCircunferencia(equacao = None, centro_raio = None, ponto = None):
+    
+     # Criando a figura e o eixo
+    fig, ax = plt.subplots()
+    
+    # Movendo as espinhas para o centro
+    ax.spines['left'].set_position('zero')
+    ax.spines['bottom'].set_position('zero')
+    
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+
+    # Movendo os ticks para o centro
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+    
+    ax.axhline(0, color='black',linewidth=0.5)
+    ax.axvline(0, color='black',linewidth=0.5)
+    
+    if equacao:
+        centro_x = st.number_input("Digite a coordenada x do centro da circunferência:", value=0)
+        centro_y = st.number_input("Digite a coordenada y do centro da circunferência:", value=0)
+        raio = st.number_input("Digite o raio da circunferência:", value=0)
         
+        if raio < 0:
+            st.error("O raio da circunferência não pode ser negativo.")
+        else:
+            st.info(f"A equação da circunferência é $(x - {centro_x})^2 + (y - {centro_y})^2 = {raio}^2$. O centro da circunferência é C({centro_x}, {centro_y}) e o raio é {raio}.")
+            circle = plt.Circle((centro_x, centro_y), raio, color='b', fill=False)
+            ax.add_artist(circle)
+            
+            # plotando o centro
+            ax.plot(centro_x, centro_y, 'ro', markersize = 5)
+            
+            ax.annotate(f'C{centro_x, centro_y}', (centro_x, centro_y), textcoords="offset points", xytext=(-15,-15), ha='center', color='red', bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
+            
+            
+            max_value = max(abs(centro_x), abs(centro_y), raio)
+            
+            # Definindo os limites dos eixos
+            ax.set_xlim(-max_value-10, max_value+10)
+            ax.set_ylim(-max_value-10, max_value+10)
+            
+            ax.set_aspect('equal')
+        
+        
+    elif centro_raio:
+
+        centro_x = st.number_input("Digite a coordenada x do centro da circunferência:", value=0)
+        centro_y = st.number_input("Digite a coordenada y do centro da circunferência:", value=0)
+        raio = st.number_input("Digite o raio da circunferência:", value=0)
+        
+        if raio < 0:
+            st.error("O raio da circunferência não pode ser negativo.")
+        else:
+            st.info(f"O centro da circunferência é C({centro_x}, {centro_y}) e o raio é {raio}.")
+            circle = plt.Circle((centro_x, centro_y), raio, color='b', fill=False)
+            ax.add_artist(circle)
+            
+            # plotando o centro
+            ax.plot(centro_x, centro_y, 'ro', markersize = 5)
+            
+            ax.annotate(f'C{centro_x, centro_y}', (centro_x, centro_y), textcoords="offset points", xytext=(-15,-15), ha='center', color='red', bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
+            
+            max_value = max(abs(centro_x), abs(centro_y), raio)
+            
+            # Definindo os limites dos eixos
+            ax.set_xlim(-max_value-10, max_value+10)
+            ax.set_ylim(-max_value-10, max_value+10)
+            
+            ax.set_aspect('equal')
+        
+    elif ponto:
+        
+        ponto_x = st.number_input("Digite a coordenada x do ponto:", value=0)
+        ponto_y = st.number_input("Digite a coordenada y do ponto:", value=0)
+        
+        centro_x = st.number_input("Digite a coordenada x do centro da circunferência:", value=0)
+        centro_y = st.number_input("Digite a coordenada y do centro da circunferência:", value=0)
+        
+        raio = st.number_input("Digite o raio da circunferência:", value=0)
+        
+        if raio < 0:
+            st.error("O raio da circunferência não pode ser negativo.")
+        else:
+            distancia = ((ponto_x - centro_x)**2 + (ponto_y - centro_y)**2)**0.5
+            
+            if distancia > raio:
+                st.info(f"O ponto ({ponto_x}, {ponto_y}) está fora da circunferência.")
+            elif distancia < raio:
+                st.info(f"O ponto ({ponto_x}, {ponto_y}) está dentro da circunferência.")
+            else:
+                st.info(f"O ponto ({ponto_x}, {ponto_y}) está na circunferência.")
+            
+            circle = plt.Circle((centro_x, centro_y), raio, color='b', fill=False)
+            ax.add_artist(circle)
+            
+            # plotando o centro
+            ax.plot(centro_x, centro_y, 'ro', markersize = 5)
+            
+            ax.annotate(f'C{centro_x, centro_y}', (centro_x, centro_y), textcoords="offset points", xytext=(-15,-15), ha='center', color='red', bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
+            
+            # plotando o ponto
+            ax.plot(ponto_x, ponto_y, 'go', markersize = 5)
+            
+            ax.annotate(f'P{ponto_x, ponto_y}', (ponto_x, ponto_y), textcoords="offset points", xytext=(-15,-15), ha='center', color='green', bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.2'))
+            
+            max_value = max(abs(centro_x), abs(centro_y), raio, ponto_x, ponto_y)
+            
+            # Definindo os limites dos eixos
+            ax.set_xlim(-max_value-10, max_value+10)
+            ax.set_ylim(-max_value-10, max_value+10)
+            
+            ax.set_aspect('equal')
+        
+        
+    
+    # Exibindo a grade
+    ax.grid(True)
+
+    # Exibindo o gráfico no Streamlit
+    st.pyplot(fig)
+        
+    
+
+
+def circunferencias():
+    """Função para exibir a interface da funcionalidade de circunferências.
+    """
+    
+    st.subheader("Circunferências")
+    st.write("Aqui, você pode calcular a equação da circunferência, o centro e o raio. Além disso, pode verificar se um ponto está dentro ou fora da circunferência.")
+    opcao = st.radio("Selecione uma opção:", ["Equação da circunferência", "Plotar Centro e raio da circunferência", "Verificar se um ponto está dentro ou fora da circunferência"])
+    
+    if opcao == "Equação da circunferência":
+        st.info("1. A equação da circunferência é dada por: $(x - h)^2 + (y - k)^2 = r^2$, onde (h, k) é o centro e r é o raio.")
+        st.info("2. Se a circunferência não está no centro, a equação é dada por: $x^2 + y^2 + ax + by + c = 0$")
+        st.info("3. Se a circunferência está no centro, a equação é dada por: $x^2 + y^2 = r^2$")
+        
+        planoCartesianoCircunferencia(equacao = True)
+        
+    elif opcao == "Plotar Centro e raio da circunferência":
+        st.info("1. Para calcular o centro e o raio da circunferência, você precisa da equação da circunferência.")
+        st.info("2. A equação da circunferência é dada por: $(x - h)^2 + (y - k)^2 = r^2$, onde (h, k) é o centro e r é o raio.")
+        st.info("3. Se a circunferência não está no centro, a equação é dada por: $x^2 + y^2 + ax + by + c = 0$")
+        st.info("4. Se a circunferência está no centro, a equação é dada por: $x^2 + y^2 = r^2$")
+        
+        planoCartesianoCircunferencia(centro_raio = True)
+    
+    elif opcao == "Verificar se um ponto está dentro ou fora da circunferência":
+        st.info("1. Para verificar se um ponto está dentro ou fora da circunferência, você precisa das coordenadas do ponto e da equação da circunferência.")
+        st.info("2. A equação da circunferência é dada por: $(x - h)^2 + (y - k)^2 = r^2$, onde (h, k) é o centro e r é o raio.")
+        st.info("3. Se o ponto está dentro da circunferência, a distância do ponto ao centro é menor que o raio.")
+        st.info("4. Se o ponto está fora da circunferência, a distância do ponto ao centro é maior que o raio.")
+        st.info("5. Se o ponto está na circunferência, a distância do ponto ao centro é igual ao raio.")
+        
+        planoCartesianoCircunferencia(ponto = True)
+    
