@@ -158,10 +158,7 @@ def pontos():
     elif opcao == "Equação da reta que passa por dois pontos":
         planoCartesiano(pontoA_x, pontoA_y, pontoB_x, pontoB_y, reta = True)
 
-def planoCartesianoReta(reta_a, reta_b, c, ponto_x = None, ponto_y = None, distancia = None):
-    
-    ponto = (ponto_x, ponto_y)
-    
+def planoCartesianoReta(reta_a = None, reta_b = None, c = None, ponto_x = None, ponto_y = None, distancia = None, paralela = None, perpendicular = None):
     # Criando a figura e o eixo
     fig, ax = plt.subplots()
     
@@ -180,6 +177,7 @@ def planoCartesianoReta(reta_a, reta_b, c, ponto_x = None, ponto_y = None, dista
     ax.axvline(0, color='black',linewidth=0.5)
 
     if distancia:
+        ponto = (ponto_x, ponto_y)
         division = reta_a**2 + reta_b**2
         
         if division == 0:
@@ -213,27 +211,47 @@ def planoCartesianoReta(reta_a, reta_b, c, ponto_x = None, ponto_y = None, dista
             y_values = (-reta_a * x_values - c) / reta_b
             ax.plot(x_values, y_values, 'g-', linewidth = 1)
             
-            # Exibindo a grade
-            ax.grid(True)
-
-            # Exibindo o gráfico no Streamlit
-            st.pyplot(fig)
-                    
-
+    elif paralela:
+        
+        reta1_a = st.number_input("Digite o coeficiente angular da reta 1 (m1):", value=0)
+        reta1_c = st.number_input("Digite o termo independente da reta 1 (c1):", value=0)
+        
+        reta2_a = st.number_input("Digite o coeficiente angular da reta 2 (m2):", value=0)
+        reta2_c = st.number_input("Digite o termo independente da reta 2 (c2):", value=0)
+        
+        if reta1_a == reta2_a:
+            st.info("As retas são paralelas.")
+        else:
+            st.info("As retas não são paralelas.")
+        
+        # Definindo os limites dos eixos
+        ax.set_xlim(-10, 10)
+        ax.set_ylim(-10, 10)
+        
+        # Definindo os valores de x para cobrir todo o intervalo do gráfico
+        x_values = np.linspace(-10, 10, 400)
+        y_values1 = reta1_a * x_values + reta1_c
+        y_values2 = reta2_a * x_values + reta2_c
+        
+        # Plotando as retas
+        ax.plot(x_values, y_values1, 'r-', linewidth = 1)
+        ax.plot(x_values, y_values2, 'b-', linewidth = 1)
+        
     
-        
-        
-            
-        
-    
+    # Exibindo a grade
+    ax.grid(True)
+
+    # Exibindo o gráfico no Streamlit
+    st.pyplot(fig)              
+ 
    
 def retas():
     """Função para exibir a interface da funcionalidade de retas.
     """
     
     st.subheader("Retas")
-    st.write("Aqui você pode calcular: a distância de um ponto a uma reta e a equação da reta paralela ou perpendicular a uma reta dada que passa por um ponto.")
-    opcao = st.radio("Selecione uma opção:", ["Distância de um ponto a uma reta", "Equação da reta paralela ou perpendicular a uma reta dada que passa por um ponto"])
+    st.write("Aqui você pode calcular: a distância de um ponto a uma reta, verificar se uma é reta paralela e equação da reta perpendicular.")
+    opcao = st.radio("Selecione uma opção:", ["Distância de um ponto a uma reta", "Verificar se uma reta é paralela", "Equação da reta perpendicular"])
     
     if opcao == "Distância de um ponto a uma reta":
         
@@ -249,6 +267,18 @@ def retas():
         reta_c = st.number_input("Digite o termo independente da reta (c):", value=0)
         
         planoCartesianoReta(reta_a, reta_b, reta_c, ponto_x, ponto_y, distancia = True)
+        
+    elif opcao == "Verificar se uma reta é paralela":
+        
+        st.info("1. Para verificar se duas retas são paralelas, você precisa das equações das retas.")
+        st.info("2. Duas retas são paralelas se seus coeficientes angulares forem iguais.")
+        st.info("3. Se a1 = a2, então as retas são paralelas.")
+        st.info("4. Se a1 != a2, então as retas não são paralelas.")
+        st.info("5. Aqui, consideramos a equação da reta na forma (y = mx + c)")
+        
+        planoCartesianoReta(paralela = True)
+    
+        
         
         
         
