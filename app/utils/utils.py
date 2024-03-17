@@ -236,6 +236,30 @@ def planoCartesianoReta(reta_a = None, reta_b = None, c = None, ponto_x = None, 
         # Plotando as retas
         ax.plot(x_values, y_values1, 'r-', linewidth = 1)
         ax.plot(x_values, y_values2, 'b-', linewidth = 1)
+    
+    elif perpendicular:
+        
+        reta_a = st.number_input("Digite o coeficiente angular da reta (m):", value=0)
+        reta_c = st.number_input("Digite o termo independente da reta (c):", value=0)
+        
+        if reta_a == 0:
+            reta_a = 0.0001
+        
+        fracao = f"y = -\\frac{1}{{{reta_a}}}x + {reta_c}"
+        st.info(f"A equação da reta perpendicular é ${fracao}$ e está representada em azul. A reta original é $y = {reta_a}x + {reta_c}$ e está representada em vermelho.")
+        
+        # Definindo os limites dos eixos
+        ax.set_xlim(-10, 10)
+        ax.set_ylim(-10, 10)
+        
+        # Definindo os valores de x para cobrir todo o intervalo do gráfico
+        x_values = np.linspace(-10, 10, 400)
+        y_values_perpendicular = -1/reta_a * x_values + reta_c
+        y_values = reta_a * x_values + reta_c
+        
+        # Plotando as retas
+        ax.plot(x_values, y_values, 'r-', linewidth = 1)
+        ax.plot(x_values, y_values_perpendicular, 'b-', linewidth = 1)    
         
     
     # Exibindo a grade
@@ -256,7 +280,7 @@ def retas():
     if opcao == "Distância de um ponto a uma reta":
         
         st.info("1. Para calcular a distância de um ponto a uma reta, você precisa da equação da reta e das coordenadas do ponto.")
-        st.info("2. Aqui, consideramos a equação da reta na forma (ax + by + c = 0)")
+        st.info("2. Aqui, consideramos a equação da reta na forma ($ax + by + c = 0$).")
         st.info("3. A distância de um ponto (x0, y0) a uma reta ax + by + c = 0 é dada pela fórmula: d = $\\frac{|ax + by + c|}{\\sqrt{a^2 + b^2}}$, onde d é a distância.")
         
         ponto_x = st.number_input("Digite a coordenada x do ponto:", value=0)
@@ -277,6 +301,17 @@ def retas():
         st.info("5. Aqui, consideramos a equação da reta na forma (y = mx + c)")
         
         planoCartesianoReta(paralela = True)
+    
+    elif opcao == "Equação da reta perpendicular":
+        
+        st.info("1. Para calcular a equação da reta perpendicular, você só precisa da equação da reta.")
+        st.info("2. A equação da reta perpendicular é dada por: $y = -\\frac{1}{m}x + c$, onde m é o coeficiente angular da reta original.")
+        st.info("3. Aqui, consideramos a equação da reta na forma (y = mx + c)")
+        st.info("4. Se a reta original for horizontal, a reta perpendicular será vertical e vice-versa.")
+        
+        
+        planoCartesianoReta(perpendicular = True)
+        
     
         
         
