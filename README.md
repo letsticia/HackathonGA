@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ## 3. Como usar:
 1. Clone o repositório
 2. Abra o terminal na pasta do projeto
-3. Execute o comando abaixo dos Requisitos
+3. Execute o comando dos Requisitos
 4. Execute o comando abaixo para rodar o projeto:
     ```python
     streamlit run app/main.py
