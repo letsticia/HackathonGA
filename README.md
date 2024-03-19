@@ -1,4 +1,4 @@
-# HackathonGA
+# Hackathon de Geometria Analítica
 Repositório destinado ao hackathon da disciplina de Geometria Analítica do curso Bacharelado em Tecnologia da UFERSA. Este projeto tem como objetivo a criação de um aplicativo web que possa auxiliar no ensino e aprendizado de Geometria Analítica para alunos do ensino médio.
 
 ## 1. Pré-requisitos:
